@@ -5,9 +5,15 @@ import java.util.Comparator;
  */
 abstract public class Genetic<T> {
     //String value;
-    //int fitness;
+    //float fitness;
     public abstract T mate(T G2);
-    public abstract static class Comperator { };
+    public static class Comperator<T extends Genetic<T>> implements Comparator<T> {
+        @Override
+        public int compare(T S1, T S2) {
+            return (int)(S1.getFitness() - S2.getFitness());
+        }
+    }
+
     public static Class getMyClass() { return Genetic.class; };
     public abstract void calculateFitness();
     public abstract void mutate();

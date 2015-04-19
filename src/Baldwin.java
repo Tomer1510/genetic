@@ -11,10 +11,10 @@ public class Baldwin extends Genetic<Baldwin>{
     int GUESSING_TRIES;
     static Random rnd = new Random(System.currentTimeMillis());
 
-    public static class Comperator implements Comparator<Baldwin> {
+    public static class Comperator extends Genetic.Comperator<Baldwin> {
         @Override
         public int compare(Baldwin G1, Baldwin G2) {
-            return (G1.fitness != 0 || G2.fitness != 0)?(int)(G1.fitness - G2.fitness):(G1.getAmountOfRandom() - G2.getAmountOfRandom());
+            return (G1.fitness != 0 || G2.fitness != 0) ? super.compare(G1, G2) : (G1.getAmountOfRandom() - G2.getAmountOfRandom());
         }
     }
 
