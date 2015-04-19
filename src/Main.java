@@ -28,10 +28,10 @@ public class Main {
         double ELITE_RATE = 0.25;
 
         // Selection method
-        Runner.Choose SELECTION_METHOD = Runner.Choose.RWS;
+        Runner.Choose SELECTION_METHOD = Runner.Choose.TOUR;
 
         // The problem to run on
-        Problem problem = Problem.STR;
+        Problem problem = Problem.BALDWIN;
 
         // Stop when the fittest of a generation has fitness of 0
         boolean stopAtZero = true;

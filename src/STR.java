@@ -7,18 +7,6 @@ import java.util.Comparator;
 
 public class STR extends Genetic<STR>{
 
-    /*
-    public static class Comperator implements Comparator<STR> {
-        @Override
-        public int compare(STR S1, STR S2) {
-            return (int)(S1.fitness - S2.fitness);
-        }
-    }
-    */
-    public static Class<STR> getMyClass() {
-        return STR.class;
-    }
-
     public float getDistance(STR a, STR b) {
         if (!a.target.equals(b.target))
             return -1;

@@ -18,6 +18,12 @@ public class Baldwin extends Genetic<Baldwin>{
         }
     }
 
+    public float getDistance(Baldwin a, Baldwin b) {
+        if (!a.target.equals(b.target))
+            return -1;
+        return new STR(a.value, b.value).getFitness();
+    }
+
 
     @Override
     public Baldwin mate(Baldwin B2) {

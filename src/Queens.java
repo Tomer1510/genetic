@@ -9,19 +9,6 @@ public class Queens extends Genetic<Queens>{
     int N;
     List<Integer> queens;
 
-    /*
-    public static class Comperator implements Comparator<Queens> {
-        @Override
-        public int compare(Queens S1, Queens S2) {
-            return (int)(S1.fitness - S2.fitness);
-        }
-    }
-    */
-
-    public static Class<Queens> getMyClass() {
-        return Queens.class;
-    }
-
     public float getDistance(Queens a, Queens b) {
         if (a.N != b.N)
             return -1;
