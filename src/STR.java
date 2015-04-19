@@ -10,7 +10,7 @@ public class STR extends Genetic<STR>{
     public static class Comperator implements Comparator<STR> {
         @Override
         public int compare(STR S1, STR S2) {
-            return (S1.fitness - S2.fitness);
+            return (int)(S1.fitness - S2.fitness);
         }
     }
 
@@ -27,13 +27,13 @@ public class STR extends Genetic<STR>{
     static Random rnd = new Random(System.currentTimeMillis());
     private String target, value;
 
-    private int fitness;
+    private float fitness;
 
     public String getValue() {
         return this.value;
     }
 
-    public int getFitness() {
+    public float getFitness() {
         return this.fitness;
     }
 

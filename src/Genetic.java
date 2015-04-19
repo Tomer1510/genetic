@@ -12,7 +12,6 @@ abstract public class Genetic<T> {
     public abstract void calculateFitness();
     public abstract void mutate();
     public abstract void generateValue();
-    public abstract String getValue();
-    public abstract int getFitness();
-    public abstract float getDistance(T a, T b);
+    public abstract float getFitness();
+    //public abstract float getDistance(T a, T b);
 }

@@ -12,7 +12,7 @@ public class Queens extends Genetic<Queens>{
     public static class Comperator implements Comparator<Queens> {
         @Override
         public int compare(Queens S1, Queens S2) {
-            return (S1.fitness - S2.fitness);
+            return (int)(S1.fitness - S2.fitness);
         }
     }
 
@@ -33,13 +33,13 @@ public class Queens extends Genetic<Queens>{
     static Random rnd = new Random(System.currentTimeMillis());
     private String target, value;
 
-    private int fitness;
+    private float fitness;
 
     public String getValue() {
         return this.value;
     }
 
-    public int getFitness() {
+    public float getFitness() {
         return this.fitness;
     }
 

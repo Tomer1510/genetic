@@ -1,3 +1,6 @@
+import com.sun.org.apache.bcel.internal.generic.POP;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,23 +13,54 @@ import java.util.List;
 
 public class Main {
 
+    private enum Problem {
+        STR, QUEENS, BALDWIN
+    }
 
     public static void main(String[] args) {
-        /*
-        Runner<Queens> runner = new Runner<Queens>(Queens.class, Runner.Choose.TOUR, 2000, 0.65, 0.45);
-        runner.run();
+        // Population size
+        int POP_SIZE = 1000;
 
-        Runner<STR> runner2 = new Runner<STR>(STR.class, Runner.Choose.TOUR, 2000, 0.55, 0.35);
-        runner2.run();
-        */
+        // Mutation rate
+        double MUTATION_RATE = 0.55;
 
-        Island<Queens> island = new Island<Queens>(Queens.class, 5, 2000, 0.45, 0.55);
-        island.doEvolutionAll();
-        island.doEvolutionAll();
-        island.doEvolutionAll();
-        island.doEvolutionAll();
-        island.doEvolutionAll();
-        island.doEvolutionAll();
+        // Elite rate
+        double ELITE_RATE = 0.25;
+
+        // Selection method
+        Runner.Choose SELECTION_METHOD = Runner.Choose.TOUR;
+
+        // The problem to run on
+        Problem problem = Problem.BALDWIN;
+
+        // Stop when the fittest of a generation has fitness of 0
+        boolean stopAtZero = true;
+
+
+        
+
+        if (problem == Problem.BALDWIN) {
+            Runner<Baldwin> runner = new Runner<Baldwin>(Baldwin.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+            runner.stopAtZero = stopAtZero;
+            runner.run();
+        }
+
+        if (problem == Problem.STR) {
+            Runner<STR> runner = new Runner<STR>(STR.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+            runner.stopAtZero = stopAtZero;
+            runner.run();
+        }
+
+        if (problem == Problem.QUEENS) {
+            Runner<Queens> runner = new Runner<Queens>(Queens.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+            runner.stopAtZero = stopAtZero;
+            runner.run();
+        }
+
+
+        //Island<STR> island = new Island<STR>(STR.class, 0, 0.35, 2048, 0.64, 0.45);
+        //island.addIsland(2048, 0.64, 0.35, Runner.Choose.TOUR, 2);
+        //island.run(5);
     }
 
 }

@@ -19,6 +19,7 @@ public class Runner<T extends Genetic<T>> {
     static Random rnd = new Random(System.currentTimeMillis());
     Class<T> clss;
     Choose CHOOSING_METHOD;
+    boolean stopAtZero = true;
 
     public enum Choose {
         BASIC, RWS, TOUR
@@ -74,17 +75,17 @@ public class Runner<T extends Genetic<T>> {
 
 
     private int chooseRWS() {
-        int max_fitness = this.population.get(this.population.size()-1).getFitness();
+        int max_fitness = (int)this.population.get(this.population.size()-1).getFitness();
         int total_fitness = 0;
         for (T p : this.population) {
-            total_fitness += p.getFitness();
+            total_fitness += Math.abs(max_fitness - p.getFitness())+1;
         }
         int pos = rnd.nextInt(total_fitness-1) + 1;
         int i = 0;
         for (T p : this.population) {
-            if (p.getFitness() + i >= pos)
+            if (Math.abs(max_fitness - p.getFitness()) + 1 + i >= pos)
                 return this.population.indexOf(p);
-            i += p.getFitness();
+            i += Math.abs(max_fitness - p.getFitness()) + 1;
         }
         return -1;
     }
@@ -158,7 +159,7 @@ public class Runner<T extends Genetic<T>> {
             System.out.println("Generation " + (i+1) + ":");
             System.out.println("Time elapsed: " + (System.nanoTime() - timeElapsed)/1000000000 + " (s)");
             this.doEvolution();
-            if (this.population.get(0).getFitness() == 0) {
+            if (this.stopAtZero && this.population.get(0).getFitness() == 0) {
                 break;
             }
         }
