@@ -18,12 +18,6 @@ public class Baldwin extends Genetic<Baldwin>{
         }
     }
 
-    public static class ComperatorOld implements Comparator<Baldwin> {
-        @Override
-        public int compare(Baldwin G1, Baldwin G2) {
-            return (int)(G1.fitness - G2.fitness);
-        }
-    }
 
     @Override
     public Baldwin mate(Baldwin B2) {
@@ -41,6 +35,20 @@ public class Baldwin extends Genetic<Baldwin>{
 
     public int getAmountOfRandom() {
         return this.value.length() - this.value.replace("?", "").length();
+    }
+
+    public int getAmountOfFalse() {
+        int ret = 0;
+        for (int i = 0;i < this.value.length();i++)
+            ret += (this.value.charAt(i) != '?' && this.value.charAt(i) != this.target.charAt(i))?1:0;
+        return ret;
+    }
+
+    public int getAmountOfTrue() {
+        int ret = 0;
+        for (int i = 0;i < this.value.length();i++)
+            ret += (this.value.charAt(i) == this.target.charAt(i))?1:0;
+        return ret;
     }
 
     // Here instead of mutation we will apply the "learning" algorithm
@@ -88,12 +96,12 @@ public class Baldwin extends Genetic<Baldwin>{
             int val = indexes.remove(0);
 
             // TRUE
-            if (val > (N*(this.RANDOM_PERCENT + this.TRUE_PERCENT))) {
+            if (val >= (N*(this.RANDOM_PERCENT + this.TRUE_PERCENT))) {
                 this.value += this.target.charAt(i);
             }
 
             // FALSE
-            else if (val > N*(this.RANDOM_PERCENT)) {
+            else if (val >= N*(this.RANDOM_PERCENT)) {
                 this.value += this.target.charAt(i)=='1'?'0':'1';
             }
 
@@ -111,7 +119,7 @@ public class Baldwin extends Genetic<Baldwin>{
 
     public String toString() {
         return ("Value: "+this.value + "\n" + "Target: " + this.target)
-                + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + this.getAmountOfRandom() + "\n\n";
+                + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (100*this.getAmountOfRandom()/((float)this.value.length())) + "%\n\n";
     }
 
 

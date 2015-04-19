@@ -14,7 +14,7 @@ import java.util.List;
 public class Main {
 
     private enum Problem {
-        STR, QUEENS, BALDWIN
+        STR, QUEENS, FUNC, BALDWIN
     }
 
     public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class Main {
         boolean stopAtZero = true;
 
 
-        
+
 
         if (problem == Problem.BALDWIN) {
             Runner<Baldwin> runner = new Runner<Baldwin>(Baldwin.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
