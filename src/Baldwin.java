@@ -9,6 +9,7 @@ public class Baldwin extends Genetic<Baldwin>{
     double RANDOM_PERCENT, TRUE_PERCENT, FALSE_PERCENT;
     String value, target;
     int GUESSING_TRIES;
+
     static Random rnd = new Random(System.currentTimeMillis());
 
     public static class Comperator extends Genetic.Comperator<Baldwin> {
@@ -18,7 +19,7 @@ public class Baldwin extends Genetic<Baldwin>{
         }
     }
 
-    public float getDistance(Baldwin a, Baldwin b) {
+    public double getDistance(Baldwin a, Baldwin b) {
         if (!a.target.equals(b.target))
             return -1;
         return new STR(a.value, b.value).getFitness();
@@ -118,14 +119,14 @@ public class Baldwin extends Genetic<Baldwin>{
         }
     }
 
-    public float getFitness() {
+    public double getFitness() {
         return this.fitness;
     }
 
 
     public String toString() {
         return ("Value: "+this.value + "\n" + "Target: " + this.target)
-                + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (100*this.getAmountOfRandom()/((float)this.value.length())) + "%\n\n";
+                + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (20-this.getAmountOfRandom()) + "\n\n";
     }
 
 

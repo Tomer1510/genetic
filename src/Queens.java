@@ -9,7 +9,7 @@ public class Queens extends Genetic<Queens>{
     int N;
     List<Integer> queens;
 
-    public float getDistance(Queens a, Queens b) {
+    public double getDistance(Queens a, Queens b) {
         if (a.N != b.N)
             return -1;
         int distance = 0;
@@ -28,7 +28,7 @@ public class Queens extends Genetic<Queens>{
         return this.value;
     }
 
-    public float getFitness() {
+    public double getFitness() {
         return this.fitness;
     }
 

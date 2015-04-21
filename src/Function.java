@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class Function extends Genetic<Function>{
 
-    public float getDistance(Function a, Function b) {
+    public double getDistance(Function a, Function b) {
         return Math.abs(a.fitness - b.fitness);
     }
 
@@ -16,7 +16,8 @@ public class Function extends Genetic<Function>{
 
     private float fitness;
 
-    public float getFitness() {
+
+    public double getFitness() {
         return this.fitness;
     }
 
@@ -32,8 +33,8 @@ public class Function extends Genetic<Function>{
     }
 
     public void generateValue() {
-       this.x1 = rnd.nextInt(Integer.MAX_VALUE) * (2*rnd.nextInt(2)-1);
-       this.x2 = rnd.nextInt(Integer.MAX_VALUE) * (2*rnd.nextInt(2)-1);
+       this.x1 = rnd.nextInt((int)Math.sqrt(Integer.MAX_VALUE)/2) * (2*rnd.nextInt(2)-1);
+       this.x2 = rnd.nextInt((int)Math.sqrt(Integer.MAX_VALUE)/2) * (2*rnd.nextInt(2)-1) ;
     }
 
     public void mutate() {
@@ -42,13 +43,15 @@ public class Function extends Genetic<Function>{
     	// mode 0 - change x1
     	// mode 1 - change x2
     	// mode 2 - change both
-    	if (mode > 0){
-    		int pos1 = rnd.nextInt(Integer.toBinaryString(x1).length());
-    		this.x1 = x1^(1<<pos1);
+    	if (mode > 0 && Math.abs(x1) > 1){
+    		int pos1 = rnd.nextInt(Integer.toBinaryString(Math.abs(x1)).length()-1);
+    		this.x1 = Math.abs(x1)^(1<<pos1);
+            this.x1 *= (x1)/Math.abs(x1);
     	}
-    	if (mode != 1){
-    		int pos2 = rnd.nextInt(Integer.toBinaryString(x1).length());
-    		this.x2 = x2^(1<<pos2);
+    	if (mode != 1 && Math.abs(x2) > 1){
+    		int pos2 = rnd.nextInt(Integer.toBinaryString(Math.abs(x2)).length()-1);
+    		this.x2 = Math.abs(x2)^(1<<pos2);
+            this.x2 *= (x1)/Math.abs(x2);
     	}
         this.calculateFitness();
     }
@@ -68,6 +71,7 @@ public class Function extends Genetic<Function>{
 		_a = padd+_a;
 		int c = 0;
 		for (int i=0; i<_b.length(); i++){
+
 			c = c<<1;
 			if (rnd.nextInt(2)==0)
 				c += _a.charAt(i)-48;

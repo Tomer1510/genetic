@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class STR extends Genetic<STR>{
 
-    public float getDistance(STR a, STR b) {
+    public double getDistance(STR a, STR b) {
         if (!a.target.equals(b.target))
             return -1;
         return new STR(a.getValue(), b.getValue()).getFitness();
@@ -22,7 +22,7 @@ public class STR extends Genetic<STR>{
         return this.value;
     }
 
-    public float getFitness() {
+    public double getFitness() {
         return this.fitness;
     }
 

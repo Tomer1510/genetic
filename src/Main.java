@@ -24,48 +24,84 @@ public class Main {
         double MUTATION_RATE = 0.55;
 
         // Elite rate
-        double ELITE_RATE = 0.25;
+        double ELITE_RATE = 0.30;
 
         // Selection method
         Runner.Choose SELECTION_METHOD = Runner.Choose.TOUR;
 
         // The problem to run on
-        Problem problem = Problem.FUNC;
+        Problem problem = Problem.BALDWIN;
 
         // Stop when the fittest of a generation has fitness of 0
         boolean stopAtZero = true;
 
+        // True if life-time survival method is used
+        boolean life_time = false;
+
+        // Activate islands
+        boolean islands = false;
+
+        // Migration rate for islands
+        double MIGRATION_RATE = 0.35;
+
+        // Amount of islands
+        int NUM_ISLANDS = 5;
+
+        // How many iterations for islands
+        int NUM_ITERATIONS = 500;
 
 
 
         if (problem == Problem.BALDWIN) {
-            Runner<Baldwin> runner = new Runner<Baldwin>(Baldwin.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
-            runner.stopAtZero = stopAtZero;
-            runner.run();
+            if (islands) {
+                Island<Baldwin> island = new Island<Baldwin>(Baldwin.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+                island.run(NUM_ITERATIONS);
+            }
+            else {
+                Runner<Baldwin> runner = new Runner<Baldwin>(Baldwin.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE, life_time);
+                runner.stopAtZero = stopAtZero;
+                runner.run();
+            }
         }
 
         if (problem == Problem.STR) {
-            Runner<STR> runner = new Runner<STR>(STR.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
-            runner.stopAtZero = stopAtZero;
-            runner.run();
+            if (islands) {
+                Island<STR> island = new Island<STR>(STR.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+                island.run(NUM_ITERATIONS);
+            }
+            else {
+                Runner<STR> runner = new Runner<STR>(STR.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE, life_time);
+                runner.stopAtZero = stopAtZero;
+                runner.run();
+            }
         }
 
         if (problem == Problem.QUEENS) {
-            Runner<Queens> runner = new Runner<Queens>(Queens.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
-            runner.stopAtZero = stopAtZero;
-            runner.run();
+            if (islands) {
+                Island<Queens> island = new Island<Queens>(Queens.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+                island.run(NUM_ITERATIONS);
+            }
+            else {
+                Runner<Queens> runner = new Runner<Queens>(Queens.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE, life_time);
+                runner.stopAtZero = stopAtZero;
+                runner.run();
+            }
         }
         
         if (problem == Problem.FUNC) {
-            Runner<Function> runner = new Runner<Function>(Function.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
-            runner.stopAtZero = stopAtZero;
-            runner.run();
+            if (islands) {
+                Island<Function> island = new Island<Function>(Function.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+                island.run(NUM_ITERATIONS);
+            }
+            else {
+                Runner<Function> runner = new Runner<Function>(Function.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE, life_time);
+                runner.stopAtZero = stopAtZero;
+                runner.run();
+            }
         }
 
 
-        //Island<STR> island = new Island<STR>(STR.class, 0, 0.35, 2048, 0.64, 0.45);
-        //island.addIsland(2048, 0.64, 0.35, Runner.Choose.TOUR, 2);
-        //island.run(5);
+
     }
 
 }

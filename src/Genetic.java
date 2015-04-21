@@ -6,6 +6,9 @@ import java.util.Comparator;
 abstract public class Genetic<T> {
     //String value;
     //float fitness;
+
+    final static int LIFE_TIME = 7;
+
     public abstract T mate(T G2);
     public static class Comperator<T extends Genetic<T>> implements Comparator<T> {
         @Override
@@ -17,6 +20,19 @@ abstract public class Genetic<T> {
     public abstract void calculateFitness();
     public abstract void mutate();
     public abstract void generateValue();
-    public abstract float getFitness();
-    public abstract float getDistance(T a, T b);
+    public abstract double getFitness();
+    public abstract double getDistance(T a, T b);
+
+    protected int lifetime;
+    public void set_lifetime(){
+        this.lifetime = LIFE_TIME;
+    }
+
+    public int minus_lifetime(){
+        return --this.lifetime;
+    }
+
+    public int get_lifetime(){
+        return this.lifetime;
+    }
 }
