@@ -126,7 +126,7 @@ public class Baldwin extends Genetic<Baldwin>{
 
     public String toString() {
         return ("Value: "+this.value + "\n" + "Target: " + this.target)
-                + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (20-this.getAmountOfRandom()) + "\n\n";
+               + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (100*this.getAmountOfRandom()/((float)this.value.length())) + "%\n\n";
     }
 
 

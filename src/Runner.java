@@ -292,8 +292,7 @@ public class Runner<T extends Genetic<T>> {
         System.out.println("--------------");
         this.printFittest();
         System.out.println("~~~~------~~~~");
-        System.out.println("Avg. running time per generation: "+ (tt/times));
-        System.out.println(times);
-        System.out.println(tt/times);
+        System.out.println("Avg. running time per generation(µs): "+ (tt/times));
+
     }
 }

@@ -1,9 +1,7 @@
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * Created by tomereiges on 4/3/15.
@@ -11,7 +9,7 @@ import java.util.List;
 
 
 public class Main {
-
+    static Scanner reader = new Scanner(System.in);
     private enum Problem {
         STR, QUEENS, FUNC, BALDWIN
     }
@@ -50,6 +48,92 @@ public class Main {
         // How many iterations for islands
         int NUM_ITERATIONS = 500;
 
+
+        // Ask user for input
+        boolean interactive = true;
+
+
+        if (interactive) {
+            String in = "";
+            System.out.println("Please enter the parameters: ");
+
+            System.out.println("POP_SIZE(" + POP_SIZE + "): ");
+            in = reader.nextLine();
+            if (in.length() > 0)
+                POP_SIZE = Integer.parseInt(in);
+
+            System.out.println("MUTATION_RATE(" + MUTATION_RATE + "): ");
+            in = reader.nextLine();
+            if (in.length() > 0)
+                MUTATION_RATE = Double.parseDouble(in);
+
+
+            System.out.println("ELITE_RATE(" + ELITE_RATE + "): ");
+            in = reader.nextLine();
+            if (in.length() > 0)
+                ELITE_RATE = Double.parseDouble(in);
+
+
+            System.out.println("Selection method(TOUR) TOUR/BASIC/ELITE_TOUR/RWS: ");
+            in = reader.nextLine();
+            if (in.length() > 0) {
+                if (in.equals("TOUR"))
+                    SELECTION_METHOD = Runner.Choose.TOUR;
+                if (in.equals("BASIC"))
+                    SELECTION_METHOD = Runner.Choose.BASIC;
+                if (in.equals("ELITE_TOUR"))
+                    SELECTION_METHOD = Runner.Choose.ELITE_TOUR;
+                if (in.equals("RWS"))
+                    SELECTION_METHOD = Runner.Choose.RWS;
+            }
+
+            System.out.println("Selection problem(BALDWIN) STR/QUEENS/FUNC/BALDWIN: ");
+            in = reader.nextLine();
+            if (in.length() > 0) {
+                if (in.equals("STR"))
+                    problem = Problem.STR;
+                if (in.equals("QUEENS"))
+                    problem = Problem.QUEENS;
+                if (in.equals("FUNC"))
+                    problem = Problem.FUNC;
+                if (in.equals("BALDWIN"))
+                    problem = Problem.BALDWIN;
+            }
+
+            System.out.println("Stop engine when best fitness is 0(y)? y/n ");
+            in = reader.nextLine();
+            if (in.length() > 0)
+                stopAtZero = in.charAt(0)=='y';
+
+            System.out.println("Use life time optimization as a survival method(n)? y/n ");
+            in = reader.nextLine();
+            if (in.length() > 0)
+                life_time = in.charAt(0)=='y';
+
+            System.out.println("Run the engine with islands(n)? y/n ");
+            in = reader.nextLine();
+            if (in.length() > 0) {
+                islands = in.charAt(0) == 'y';
+                if (islands) {
+                    System.out.println("MIGRATION_RATE(" + MIGRATION_RATE + "): ");
+                    in = reader.nextLine();
+                    if (in.length() > 0)
+                        MIGRATION_RATE = Double.parseDouble(in);
+
+                    System.out.println("Amount of islands(" + NUM_ISLANDS + "): ");
+                    in = reader.nextLine();
+                    if (in.length() > 0)
+                        NUM_ISLANDS = Integer.parseInt(in);
+
+                    System.out.println("How many iterations?(" + NUM_ITERATIONS + ") ");
+                    in = reader.nextLine();
+                    if (in.length() > 0)
+                        NUM_ITERATIONS = Integer.parseInt(in);
+                }
+            }
+
+
+        }
 
 
         if (problem == Problem.BALDWIN) {
