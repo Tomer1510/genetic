@@ -1,4 +1,3 @@
-import com.sun.org.apache.bcel.internal.generic.POP;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class Main {
         Runner.Choose SELECTION_METHOD = Runner.Choose.TOUR;
 
         // The problem to run on
-        Problem problem = Problem.BALDWIN;
+        Problem problem = Problem.FUNC;
 
         // Stop when the fittest of a generation has fitness of 0
         boolean stopAtZero = true;
@@ -53,6 +52,12 @@ public class Main {
 
         if (problem == Problem.QUEENS) {
             Runner<Queens> runner = new Runner<Queens>(Queens.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+            runner.stopAtZero = stopAtZero;
+            runner.run();
+        }
+        
+        if (problem == Problem.FUNC) {
+            Runner<Function> runner = new Runner<Function>(Function.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE);
             runner.stopAtZero = stopAtZero;
             runner.run();
         }
