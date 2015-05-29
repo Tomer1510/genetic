@@ -1,9 +1,8 @@
-/**
+package genetic; /**
  * Created by tomereiges on 4/3/15.
  */
 
 import java.util.Random;
-import java.util.Comparator;
 
 public class Function extends Genetic<Function>{
 

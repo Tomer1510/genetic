@@ -1,4 +1,4 @@
-/**
+package genetic; /**
  * Created by tomereiges on 4/3/15.
  */
 

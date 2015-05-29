@@ -1,3 +1,5 @@
+package genetic;
+
 import java.util.*;
 
 /**
@@ -11,6 +13,7 @@ public class Baldwin extends Genetic<Baldwin>{
     int GUESSING_TRIES;
 
     static Random rnd = new Random(System.currentTimeMillis());
+
 
     public static class Comperator extends Genetic.Comperator<Baldwin> {
         @Override
@@ -126,7 +129,7 @@ public class Baldwin extends Genetic<Baldwin>{
 
     public String toString() {
         return ("Value: "+this.value + "\n" + "Target: " + this.target)
-               + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (100*this.getAmountOfRandom()/((float)this.value.length())) + "%\n\n";
+                + "\nFitness: "+this.fitness + "\n" + "Amount of ?: " + (20-this.getAmountOfRandom()) + "\n\n";
     }
 
 

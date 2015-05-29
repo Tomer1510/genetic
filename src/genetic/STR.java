@@ -1,9 +1,8 @@
-/**
+package genetic; /**
  * Created by tomereiges on 4/3/15.
  */
 
 import java.util.Random;
-import java.util.Comparator;
 
 public class STR extends Genetic<STR>{
 
@@ -61,7 +60,7 @@ public class STR extends Genetic<STR>{
 
     @Override
     public STR mate(STR S2) {
-        if (this.target != S2.target) {
+        if (!this.target.equals(S2.target)) {
             System.out.println("Targets don't match!");
             return null;
         }

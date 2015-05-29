@@ -1,4 +1,4 @@
-
+package genetic;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ public class Runner<T extends Genetic<T>> {
     Choose CHOOSING_METHOD;
     boolean stopAtZero = true;
     double std, avg;
-    private double LOCAL_OPTIMUM_REL_STD = 0.10;
-    private double LOCAL_OPTIMUM_FIX = 0.10;
+    private double LOCAL_OPTIMUM_REL_STD = 0.0;
+    private double LOCAL_OPTIMUM_FIX = 0.0;
     private int ELITE_TOUR_SIZE;
     private boolean L_FLAG;
     public enum Choose {
@@ -38,7 +38,7 @@ public class Runner<T extends Genetic<T>> {
         this.POP_SIZE = POP_SIZE;
         this.ELITE_RATE = ELITE_RATE;
         this.MUTATION_RATE = MUTATION_RATE;
-        this.NUMBER_OF_GENS = 500;
+        this.NUMBER_OF_GENS = 5000;
         this.TOUR_SIZE = (int)(Math.log(POP_SIZE)/Math.log(2));
         this.ELITE_TOUR_SIZE = (int)(Math.log((int)(POP_SIZE*ELITE_RATE))/Math.log(2));
         this.L_FLAG = false;
@@ -70,6 +70,7 @@ public class Runner<T extends Genetic<T>> {
                 this.population.add((T) clss.newInstance());
                 if (L_FLAG) this.population.get(i).set_lifetime();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,11 +221,13 @@ public class Runner<T extends Genetic<T>> {
 
     private void sortPopulation() throws IllegalAccessException, InstantiationException{
         Collections.sort(this.population, (java.util.Comparator) this.clss.getClasses()[0].newInstance());
-
+        //Collections.sort(this.population, (java.util.Comparator) T.Comperator.class.newInstance());
+        //Collections.sort(this.population, (java.util.Comparator) Genetic.Comperator.class.newInstance());
     }
 
     public void printFittest() {
         System.out.println(this.population.get(0));
+        //System.out.println(this.population.get(1));
     }
 
     public void doEvolution () {
@@ -281,9 +284,13 @@ public class Runner<T extends Genetic<T>> {
         for (int i = 0; i < this.NUMBER_OF_GENS; i++, ++times) {
             System.out.println("Generation " + (i+1) + ":");
             System.out.println("Time elapsed: " +
-                    (System.nanoTime() - timeElapsed)/1000000000 + " (s)");
+                   (System.nanoTime() - timeElapsed)/1000000000 + " (s)");
+            System.out.println("Cache hit: "+(100F*(float)Text.cacheHit/Text.cacheCounter)+"%");
+            Text.cacheHit=0;
+            Text.cacheCounter=1;
             this.doEvolution();
             this.handleLocalOptimum();
+
             if (this.stopAtZero && this.population.get(0).getFitness() == 0) {
                 break;
             }
@@ -292,7 +299,8 @@ public class Runner<T extends Genetic<T>> {
         System.out.println("--------------");
         this.printFittest();
         System.out.println("~~~~------~~~~");
-        System.out.println("Avg. running time per generation(µs): "+ (tt/times));
-
+        System.out.println("Avg. running time per generation: "+ (tt/times));
+        System.out.println(times);
+        System.out.println(tt/times);
     }
 }

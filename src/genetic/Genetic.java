@@ -1,3 +1,5 @@
+package genetic;
+
 import java.util.Comparator;
 
 /**
@@ -13,6 +15,8 @@ abstract public class Genetic<T> {
     public static class Comperator<T extends Genetic<T>> implements Comparator<T> {
         @Override
         public int compare(T S1, T S2) {
+            System.out.println("sdf");
+
             return (int)(S1.getFitness() - S2.getFitness());
         }
     }
