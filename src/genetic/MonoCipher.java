@@ -16,7 +16,7 @@ public class MonoCipher extends Genetic<MonoCipher> {
     static String story = null;
     float fitness;
     String key;
-    String target;
+    static String target;
     static String cipherText;
     Text text;
 
@@ -52,8 +52,9 @@ public class MonoCipher extends Genetic<MonoCipher> {
     public void calculateFitness() {
         //f = new Frequencies("freq.txt");
         //Text.initCache(this.cipherText);
+
         String decryptedText = cryptor.decrypt(this.key, this.cipherText);
-        if (this.key.equals("zebrascdfghijklmnopqtuvwxy")) {
+        if (this.key.equals("zebrascdfghijklmnopqtuvwxya")) {
             this.fitness = 0;
             return;
         }
@@ -135,7 +136,7 @@ public class MonoCipher extends Genetic<MonoCipher> {
             System.out.println("Targets don't match!");
             return null;
         }
-
+        //if (true) return new MonoCipher(this.cipherText, this.target, key, this, b);
         float temp = System.currentTimeMillis();
 
         List<Character> l1 = explode(this.key);
@@ -194,7 +195,7 @@ public class MonoCipher extends Genetic<MonoCipher> {
 
     private void readText(int cutoff) {
         if (MonoCipher.story != null) {
-            this.target = MonoCipher.story.substring(0, cutoff);
+            //this.target = MonoCipher.story.substring(0, cutoff);
             return;
         }
         try {
@@ -218,13 +219,13 @@ public class MonoCipher extends Genetic<MonoCipher> {
 
     public MonoCipher() {
         this.generateValue();
-        this.readText(4000);
+        this.readText(7500);
         this.calculateFitness();
     }
 
     public MonoCipher(String key) {
         this.key = key;
-        this.readText(4000);
+        this.readText(7500);
         this.calculateFitness();
     }
 

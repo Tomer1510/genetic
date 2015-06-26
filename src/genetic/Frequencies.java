@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.util.Pair;
 
 /**
  * Created by tomereiges on 5/10/15.
@@ -66,7 +67,6 @@ public class Frequencies {
         for(Pair<Character, Float> p : this.MONO) {
             if(p.getKey() == c)
                 return p.getValue();
-
         }
         return 0;
     }

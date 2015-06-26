@@ -10,13 +10,12 @@ abstract public class Genetic<T> {
     //float fitness;
 
     final static int LIFE_TIME = 7;
+    private static int GENERATION = 0;
 
     public abstract T mate(T G2);
     public static class Comperator<T extends Genetic<T>> implements Comparator<T> {
         @Override
         public int compare(T S1, T S2) {
-            System.out.println("sdf");
-
             return (int)(S1.getFitness() - S2.getFitness());
         }
     }
@@ -26,6 +25,15 @@ abstract public class Genetic<T> {
     public abstract void generateValue();
     public abstract double getFitness();
     public abstract double getDistance(T a, T b);
+    public static void incrementGeneration() {
+        Genetic.GENERATION++;
+    }
+
+    public static int getGeneration() {
+        return Genetic.GENERATION;
+    }
+
+    public void kill() { }
 
     protected int lifetime;
     public void set_lifetime(){

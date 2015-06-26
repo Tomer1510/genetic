@@ -5,18 +5,15 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import genetic.Pair;
-
 /**
  * Created by tomereiges on 4/3/15.
  */
 
 
-public class Main {
+public class MainGuy {
     static Scanner reader = new Scanner(System.in);
     private enum Problem {
-        STR, QUEENS, FUNC, BALDWIN, KNAPSACK, MULTISACK, GRAPH_KNAPSACK, MonoCipher
+        STR, QUEENS, FUNC, BALDWIN, KNAPSACK, MULTISACK, GRAPH_KNAPSACK, MonoCipher, PolyCipher, KColoring
     }
 
     public static int count(int size, boolean withSpace, String text) {
@@ -38,119 +35,38 @@ public class Main {
         return ret;
     }
 
-    public static void generateValue() {
-        Random rand = new Random();
-        int n = 15;
-        int k = 4;
-        Map<Integer, Integer> coloring = new HashMap<>();
-
-        List<Integer> colors = new LinkedList<>();
-        for (int i = 0;i < k;i++)
-            colors.add(i);
-        Collections.shuffle(colors);
-
-        int nodesLeft = n;
-        int prev = 0;
-        for (int i = 0;i < k;i++) {
-            int howMany = rand.nextInt(nodesLeft - (k-i +1));
-            if (howMany == 0 && nodesLeft > 0) {
-                howMany = 1;
-            }
-            if (i == k-1) {
-                howMany = nodesLeft;
-            }
-            nodesLeft -= howMany;
-            for (int j = prev;j < prev+howMany;j++) {
-                coloring.put(j, i);
-            }
-            prev = prev+howMany;
-        }
-        System.out.println(coloring);
-    }
-
-    public static void preprocess() {
-        MonoCipher m = new MonoCipher();
-        String text = m.story;
-        Map<String, Integer> cache = new HashMap<>();
-        for (char c1 = 'a';c1 <= 'z';c1++) {
-            for (char c2 = 'a';c2 <= 'z';c2++) {
-                String pair = String.valueOf(c1)+String.valueOf(c2);
-                cache.put(pair, (text.length() - text.replace(pair, "").length())/2);
-            }
-        }
-
-
-        for (char c1 = 'a';c1 <= 'z';c1++) {
-            for (char c2 = 'a';c2 <= 'z';c2++) {
-                for (char c3 = 'a';c3 <= 'z';c3++) {
-                    String triple = String.valueOf(c1) + String.valueOf(c2) + String.valueOf(c3);
-                    cache.put(triple, (text.length() - text.replace(triple, "").length()) / 3);
-                }
-            }
-        }
-
-
-    }
-
 
     public static void main(String[] args) throws IOException {
 
 
-        /*
-        if (true) {
-            //String target = readFrequencies();
-            String key = "zebrascdfghijklmnopqtuvwxy";
-           // String cipherText = (new Cryptor()).encrypt(key);
-
-            MonoCipher m = new MonoCipher(key);
+        if (false) {
             try {
-
-                System.out.println(m);
-                //System.out.println(m.fitness);
-                //System.out.println(m.text.getScore());
-
-
-            } catch (Exception e) {
+                Graph g = new Graph("DSJC125.1.col");
             }
-        }*/
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
+            return;
+        }
+        //System.out.println(MonoCryptor.encrypt("zebrascdfghijklmnopqtuvwxy", "ALICE was beginning to get very tired of sitting by her sister on the bank and of having nothing to do: once or twice she had peeped into the book her sister was readin"));
 
-       // System.out.println(PolyCryptor.encrypt("lemon", "ATTACKATDAWN"));
-
-
-        //System.out.println(PolyCryptor.decrypt("LEMONLEMONLE", "lxfopvefrnhr"));
-
-        //System.out.println("Start");
-        //preprocess();
-        Map<Pair<Integer, Integer>, String> test  = new HashMap();
-        test.put(new Pair<Integer, Integer>(1, 5), "test");
-        System.out.println(test.get(new Pair<Integer, Integer>(1,5)));
-        //System.out.println("Finished");
-
-       /* Pair<Integer, Integer> aa = new Pair<>(1, 5);
-        Pair<Integer, Integer> b = new Pair<>(1, 5);
-        System.out.println(aa.hashCode());
-        System.out.println(b.hashCode());
-        System.out.println(aa.hashCode()==b.hashCode());
-        System.out.println(aa.equals(b) && aa.hashCode()==b.hashCode());*/
-        //System.out.println(aa.hashCode() +"\t"+ b.hashCode() + "\n" + aa.hashCode()==b.hashCode() +" \n"+aa.equals(b));
-        if (true) return;
-
+        //if (true) return;;
 
         // Population size
-        int POP_SIZE = 500;
+        int POP_SIZE = 1024;
 
         // Mutation rate
-        double MUTATION_RATE = 0.85;
+        double MUTATION_RATE = 0.80;
 
         // Elite rate
-        double ELITE_RATE = 0.15;
+        double ELITE_RATE = 0.8;
 
         // Selection method
-        Runner.Choose SELECTION_METHOD = Runner.Choose.TOUR;
+        Runner.Choose SELECTION_METHOD = Runner.Choose.BASIC;
 
         // The problem to run on
-        Problem problem = Problem.MonoCipher;
+        Problem problem = Problem.KColoring;
 
         // Stop when the fittest of a generation has fitness of 0
         boolean stopAtZero = true;
@@ -173,15 +89,15 @@ public class Main {
 
         // Ask user for input
         boolean interactive = false;
-        
-        
+
+
         // File path
         String path = "C:\\Users\\Guy Ezer\\Desktop\\Genetic\\WEING1.DAT";
         MK_Container a = new MK_Container(path);
-        
+
         // Search Method
         String search_method = "BFS"; // choosing from DFS/BFS
-        
+
         // Hiuristic Method
         String hiuristic_method = "FR"; // Choosing from Unlimited / Fraction (UL/FR)
 
@@ -291,8 +207,8 @@ public class Main {
                 runner.run();
             }
         }
-        
-        
+
+
         if (problem == Problem.STR) {
             if (islands) {
                 Island<STR> island = new Island<STR>(STR.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
@@ -316,7 +232,7 @@ public class Main {
                 runner.run();
             }
         }
-        
+
         if (problem == Problem.FUNC) {
             if (islands) {
                 Island<Function> island = new Island<Function>(Function.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
@@ -340,11 +256,11 @@ public class Main {
                 runner.run();
             }
         }
-        
-        if (problem == Problem.GRAPH_KNAPSACK){    	
-        	Branch_and_Bound s = new Branch_and_Bound();
-        	// choosing from best-first or dfs ("DFS"/"BFS")
-        	s.Search(search_method,hiuristic_method);
+
+        if (problem == Problem.GRAPH_KNAPSACK){
+            Branch_and_Bound s = new Branch_and_Bound();
+            // choosing from best-first or dfs ("DFS"/"BFS")
+            s.Search(search_method,hiuristic_method);
         }
 
         if (problem == Problem.MonoCipher) {
@@ -359,7 +275,41 @@ public class Main {
             }
         }
 
-        
+        if (problem == Problem.PolyCipher) {
+            if (islands) {
+                Island<PolyCipher> island = new Island<PolyCipher>(PolyCipher.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+                island.run(NUM_ITERATIONS);
+            }
+            else {
+                Runner<PolyCipher> runner = new Runner<PolyCipher>(PolyCipher.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE, life_time);
+                runner.stopAtZero = stopAtZero;
+                runner.run();
+            }
+        }
+
+
+        if (problem == Problem.KColoring) {
+            KColoring.initGraph();
+            System.out.println(KColoring.g);
+            if (islands) {
+                Island<KColoring> island = new Island<KColoring>(KColoring.class, NUM_ISLANDS, MIGRATION_RATE, POP_SIZE, MUTATION_RATE, ELITE_RATE);
+                island.run(NUM_ITERATIONS);
+            }
+            else {
+                Runner<KColoring> runner = new Runner<KColoring>(KColoring.class, SELECTION_METHOD, POP_SIZE, MUTATION_RATE, ELITE_RATE, life_time);
+                runner.stopAtZero = stopAtZero;
+                runner.run();
+            }
+        }
+
     }
+       
+        /*String key = "lemon";
+        String text = "hello my name is guy did u mention my name is guy this is cool this is almost as cool as guy you know that my name is guy i think i said that already this is nice typing like that who am i joking no it is not tomer is my partner did i say that already  this is cool this is nice my name is guy his name is guy attack at dawn maple story im telling a  story";
+        String cipher = PolyCryptor.encrypt(key, text);
+        System.out.println(text);
+        System.out.println(cipher);
+        System.out.println(key);
+        System.out.println(calculate_key_length(cipher));*/
 
 }

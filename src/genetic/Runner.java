@@ -30,6 +30,9 @@ public class Runner<T extends Genetic<T>> {
     }
 
 
+    public Runner () {
+
+    }
 
     public Runner(Class<T> clss, Choose method, int POP_SIZE, double MUTATION_RATE, double ELITE_RATE) {
 
@@ -148,6 +151,7 @@ public class Runner<T extends Genetic<T>> {
     }
 
     private void matePopulation() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+
         for (int i = (int)(this.POP_SIZE * this.ELITE_RATE);i < this.POP_SIZE;i ++) {
             int pos1 = 0, pos2 = 0;
             if (this.CHOOSING_METHOD == Choose.BASIC) {
@@ -167,12 +171,13 @@ public class Runner<T extends Genetic<T>> {
                 pos2 = this.chooseEliteTour();
             }
             //            this.population.set(i, this.population(pos1).(T)this.clss.getMethod("mate").invoke(this.population.get(pos1)));
-
+            this.population.get(i).kill();
             this.population.set(i, this.population.get(pos1).mate(this.population.get(pos2)));
             if (L_FLAG) this.population.get(i).set_lifetime();
             if (rnd.nextInt(100) <= this.MUTATION_RATE*100)
                 this.population.get(i).mutate();
         }
+
     }
 
     private void life_time(){
@@ -233,7 +238,7 @@ public class Runner<T extends Genetic<T>> {
     public void doEvolution () {
 
         try {
-
+            T.incrementGeneration();
             if (L_FLAG) this.life_time();
             this.matePopulation();
             this.sortPopulation();

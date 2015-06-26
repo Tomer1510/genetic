@@ -88,9 +88,21 @@ public final class Pair<T1, T2> implements Comparable <Pair<T1,T2>>{
 	 * @param a, another Pair Object
 	 * @return true if equal, false if not.
 	 */
-	public boolean equals(Pair<T1,T2> a){
-		//returns if two object are equal, does not care about nulls.
-		return (this.first == a.first && this.second == a.second);
+	@Override
+	public boolean equals(Object a){
+		//returns if two object are equal.
+		if (a == null) {
+			return false;
+		}
+
+		Pair<T1,T2> p2 = (Pair<T1,T2>)a;
+		if ((this.first == null || p2.first == null) && !(this.first == null && p2.first == null)) {
+			return false;
+		}
+		if ((this.second == null || p2.second == null) && !(this.second == null && p2.second == null)) {
+			return false;
+		}
+		return (this.first.equals(p2.first) && this.second.equals(p2.second));
 	}
 	
 	
@@ -98,6 +110,7 @@ public final class Pair<T1, T2> implements Comparable <Pair<T1,T2>>{
 	 * Returns a hashcode of the pair.
 	 * @return hashcode of the pair.
 	 */
+	@Override
 	public int hashCode(){
 		//for equals, or hash tables
 		return Objects.hash(this.first,this.second);
